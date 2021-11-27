@@ -1,4 +1,4 @@
-package castleWar;
+package castlewar;
 
 public class Player {
 }

@@ -1,8 +1,7 @@
-package castleWar;
+package castlewar;
 
-import castleWar.scene.CastleWarScene;
-import castleWar.scene.MenuScene;
-import castleWar.scene.PlayScene;
+import castlewar.scene.CastleWarScene;
+import castlewar.scene.MenuScene;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -30,8 +29,9 @@ public class CastleWar extends Application {
                 System.exit(0);
             }
         });
-        scenes.add(new MenuScene(this, 800, 600));
+        stage.setScene(new MenuScene(this, 800, 600));
         //scenes.add(new PlayScene(this, 800, 600));
+        stage.show();
 
     }
 

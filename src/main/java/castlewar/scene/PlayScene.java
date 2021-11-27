@@ -1,4 +1,4 @@
-package castleWar.scene;
+package castlewar.scene;
 
 public class PlayScene {
 }

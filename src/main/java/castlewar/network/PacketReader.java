@@ -1,4 +1,4 @@
-package castleWar.network;
+package castlewar.network;
 
 import java.io.ByteArrayInputStream;
 

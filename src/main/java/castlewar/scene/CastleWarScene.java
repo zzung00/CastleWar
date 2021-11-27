@@ -1,8 +1,7 @@
-package castleWar.scene;
+package castlewar.scene;
 
-import castleWar.CastleWar;
-import castleWar.network.PacketReader;
-import javafx.scene.Parent;
+import castlewar.CastleWar;
+import castlewar.network.PacketReader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 
