@@ -17,8 +17,8 @@ public class MenuScene extends CastleWarScene {
     private ImageView logo;
 
 
-    public MenuScene(CastleWar castleWar, int i, int i1) {
-        super(castleWar, i, i1);
+    public MenuScene(CastleWar castleWar, int width, int height) {
+        super(castleWar, width, height);
 
         getStylesheets().add(getClass().getResource("/ui/button.css").toExternalForm());
         background = new ImageView();
@@ -41,7 +41,7 @@ public class MenuScene extends CastleWarScene {
         btnPlay.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
+                castleWar.changeScene(1);
             }
         });
 
@@ -57,16 +57,6 @@ public class MenuScene extends CastleWarScene {
                 System.exit(0);
             }
         });
-
-    }
-
-    @Override
-    public void initialize() {
-
-    }
-
-    @Override
-    public void finalization() {
 
     }
 

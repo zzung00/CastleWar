@@ -2,6 +2,7 @@ package castlewar;
 
 import castlewar.scene.CastleWarScene;
 import castlewar.scene.MenuScene;
+import castlewar.scene.PlayScene;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -22,6 +23,8 @@ public class CastleWar extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        scenes.add(new MenuScene(this, 800, 600));
+        scenes.add(new PlayScene(this, 800, 600));
         stage = primaryStage;
         stage.setTitle("Castle War");
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -30,10 +33,19 @@ public class CastleWar extends Application {
                 System.exit(0);
             }
         });
-        stage.setScene(new MenuScene(this, 800, 600));
-        //scenes.add(new PlayScene(this, 800, 600));
+        stage.setScene(scenes.get(currentScene));
         stage.show();
 
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public void changeScene(int sceneNum) {
+        currentScene = sceneNum;
+        scenes.get(currentScene);
+        stage.setScene(scenes.get(currentScene));
     }
 
     public static void main(String[] args) {
