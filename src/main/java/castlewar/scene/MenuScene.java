@@ -5,38 +5,38 @@ import castlewar.network.PacketReader;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.File;
 
 public class MenuScene extends CastleWarScene {
-    private int currentStep;
-    private Label gameName;
     private Button btnPlay;
     private Button btnExit;
     private ImageView background;
+    private ImageView logo;
 
 
     public MenuScene(CastleWar castleWar, int i, int i1) {
         super(castleWar, i, i1);
 
+        getStylesheets().add(getClass().getResource("/ui/button.css").toExternalForm());
         background = new ImageView();
         background.setImage(new Image(new File("img/CastleWar_Menu.png").toURI().toString()));
         root.getChildren().add(background);
 
-        gameName = new Label("Castle War");
-        gameName.setStyle("-fx-background-color: transparent;" + "-fx-text-fill: white");
-        gameName.setPrefWidth(150);
-        gameName.setLayoutX(440);
-        gameName.setLayoutY(240);
-        gameName.requestFocus();
-        root.getChildren().add(gameName);
+        logo = new ImageView();
+        logo.setImage(new Image(new File("img/CastleWar-logo-black.png").toURI().toString()));
+        logo.setLayoutX(400 - 150);
+        logo.setLayoutY(70);
+        logo.requestFocus();
+        root.getChildren().add(logo);
 
         btnPlay = new Button();
-        btnPlay.setLayoutX(350);
-        btnPlay.setLayoutY(350);
+        btnPlay.setPrefSize(150, 50);
+        btnPlay.setText("PLAY");
+        btnPlay.setLayoutX(400 - 80);
+        btnPlay.setLayoutY(320);
         root.getChildren().add(btnPlay);
         btnPlay.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -46,8 +46,10 @@ public class MenuScene extends CastleWarScene {
         });
 
         btnExit = new Button();
-        btnExit.setLayoutX(580);
-        btnExit.setLayoutY(350);
+        btnExit.setPrefSize(150, 50);
+        btnExit.setText("EXIT");
+        btnExit.setLayoutX(400 - 80);
+        btnExit.setLayoutY(380);
         root.getChildren().add(btnExit);
         btnExit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
