@@ -12,6 +12,8 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -46,6 +48,20 @@ public class CastleWar extends Application {
             stage.show();
             socket = new Socket();
             socket.connect(new InetSocketAddress("localhost", 8888));
+            animationTimer = new AnimationTimer() {
+                private long start = System.nanoTime();
+
+                @Override
+                public void handle(long now) {
+                    double delta = (now - start) / 1000000000.0 * 6;
+                    scenes.get(currentScene).update(delta);
+                    scenes.get(currentScene).render();
+                    if (delta >= 1) {
+                        start = now;
+                    }
+                }
+            };
+            animationTimer.start();
 
         }catch (ConnectException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -62,6 +78,25 @@ public class CastleWar extends Application {
         }
 
     }
+
+    KeyListener keyListener = new KeyListener() {
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if (e.getKeyCode() == 27) {
+                System.exit(0);
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+
+        }
+    };
 
     public Stage getStage() {
         return stage;
