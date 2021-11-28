@@ -2,6 +2,7 @@ package castlewar.scene;
 
 import castlewar.Castle;
 import castlewar.CastleWar;
+import castlewar.Player;
 import castlewar.network.PacketReader;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -16,6 +17,7 @@ public class PlayScene extends CastleWarScene{
     private Canvas canvas;
     private Castle leftCastle;
     private Castle rightCastle;
+    private Player me;
 
     public PlayScene(CastleWar castleWar, int width, int height) {
         super(castleWar, width, height);
@@ -28,6 +30,7 @@ public class PlayScene extends CastleWarScene{
         root.getChildren().add(canvas);
         leftCastle = new Castle(-15, 50, false);
         rightCastle = new Castle(815, 50, true);
+        me = new Player(15, 500, false);
     }
 
     @Override
@@ -42,6 +45,7 @@ public class PlayScene extends CastleWarScene{
         graphic.strokeRect(0, 0, 800, 600);
         leftCastle.render(graphic);
         rightCastle.render(graphic);
+        me.render(graphic);
     }
 
     @Override
