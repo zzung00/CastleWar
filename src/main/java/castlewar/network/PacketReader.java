@@ -60,9 +60,4 @@ public class PacketReader {
         return String.valueOf(ret);
     }
 
-    public void skip(int num) {
-        for (int i = 0; i < num; i++) {
-            readByte();
-        }
-    }
 }
