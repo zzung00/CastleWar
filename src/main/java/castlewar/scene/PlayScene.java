@@ -7,6 +7,7 @@ import castlewar.network.PacketReader;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -14,6 +15,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class PlayScene extends CastleWarScene{
     private ImageView background;
@@ -21,6 +23,17 @@ public class PlayScene extends CastleWarScene{
     private Castle leftCastle;
     private Castle rightCastle;
     private Player me;
+
+    private Label waitingLabel; //플레이어 대기 표시해줄 라벨
+
+    //플레이어의 공격 및 성벽의 체력 감소
+    private int health;
+    private boolean dead;
+    private boolean firing;
+    private int fireCost;
+    private int fireDamage;
+    //private ArrayList<>
+
 
     public PlayScene(CastleWar castleWar, int width, int height) {
         super(castleWar, width, height);
@@ -34,6 +47,8 @@ public class PlayScene extends CastleWarScene{
         leftCastle = new Castle(-15, 50, false);
         rightCastle = new Castle(815, 50, true);
         me = new Player(15, 500, false);
+        waitingLabel = new Label("Waiting...");
+        root.getChildren().add(waitingLabel);
 
         setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
@@ -63,6 +78,8 @@ public class PlayScene extends CastleWarScene{
                     me.setDown(true);
                 }else if (event.getCode() == KeyCode.UP) {
                     me.setUp(true);
+                }else if (event.getCode() == KeyCode.ESCAPE) {
+                    System.exit(0);
                 }
             }
         });

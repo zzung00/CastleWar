@@ -76,27 +76,7 @@ public class CastleWar extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
-    KeyListener keyListener = new KeyListener() {
-        @Override
-        public void keyTyped(KeyEvent e) {
-
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-            if (e.getKeyCode() == 27) {
-                System.exit(0);
-            }
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-
-        }
-    };
 
     public Stage getStage() {
         return stage;
