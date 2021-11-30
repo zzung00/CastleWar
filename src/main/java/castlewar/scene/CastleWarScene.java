@@ -20,5 +20,5 @@ public abstract class CastleWarScene extends Scene {
 
     public abstract void render();
 
-    public  abstract void receive(PacketReader reader);
+    public abstract void receive(PacketReader reader);
 }

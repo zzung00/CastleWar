@@ -21,6 +21,7 @@ import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 
 public class CastleWar extends Application {
@@ -30,6 +31,7 @@ public class CastleWar extends Application {
 
     private Socket socket;
     private AnimationTimer animationTimer;
+    private Receiver receiver;
 
     @Override
     public void start(Stage primaryStage) {
@@ -48,6 +50,9 @@ public class CastleWar extends Application {
             stage.show();
             socket = new Socket();
             socket.connect(new InetSocketAddress("localhost", 8888));
+            receiver = new Receiver();
+            receiver.start();
+
             animationTimer = new AnimationTimer() {
                 private long start = System.nanoTime();
 
@@ -124,6 +129,7 @@ public class CastleWar extends Application {
                     if (count <= 0) {
                         break;
                     }
+                    System.out.println(Arrays.toString(data));
                     inputStream.read(data);
                     PacketReader reader = new PacketReader(data);
                     scenes.get(currentScene).receive(reader);

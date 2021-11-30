@@ -2,7 +2,10 @@ package castlewar;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 
 public class Player {
     private Image image;
@@ -12,7 +15,11 @@ public class Player {
     private boolean down;
     private boolean left;
     private boolean right;
+    private boolean shooting;
     private double speed = 1.5;
+
+    private ArrayList<PlayerAttack> playerAttacks = new ArrayList<>();
+    private PlayerAttack playerAttack;
 
     public Player(double x, double y, boolean horizontally) {
         this.x = x;
@@ -35,6 +42,10 @@ public class Player {
 
     public void setRight(boolean right) {
         this.right = right;
+    }
+
+    public void setShooting(boolean shooting) {
+        this.shooting = shooting;
     }
 
     public void setHorizontally(boolean horizontally) {
@@ -64,5 +75,11 @@ public class Player {
         }
     }
 
+    private void playerAttackProcess() {
+        for (int i = 0; i < playerAttacks.size(); i++) {
+            playerAttack = playerAttacks.get(i);
+            playerAttack.fire();
+        }
+    }
 
 }

@@ -1,6 +1,7 @@
 package castlewar.scene;
 
 import castlewar.CastleWar;
+import castlewar.network.PacketCreator;
 import castlewar.network.PacketReader;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -41,7 +42,7 @@ public class MenuScene extends CastleWarScene {
         btnPlay.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                castleWar.changeScene(1);
+                castleWar.sendPacket(PacketCreator.startGame());
             }
         });
 
@@ -74,5 +75,13 @@ public class MenuScene extends CastleWarScene {
     public void receive(PacketReader reader) {
         short packetId = reader.readShort();
         System.out.println(packetId);
+
+        switch (packetId) {
+            case 0: {
+                byte position = reader.readByte();
+                castleWar.changeScene(1);
+            }
+            break;
+        }
     }
 }
