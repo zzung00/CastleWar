@@ -130,9 +130,11 @@ public class CastleWar extends Application {
                         break;
                     }
                     System.out.println(Arrays.toString(data));
-                    inputStream.read(data);
+
                     PacketReader reader = new PacketReader(data);
+                    System.out.println(Arrays.toString(data));
                     scenes.get(currentScene).receive(reader);
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();

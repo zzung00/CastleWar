@@ -3,6 +3,7 @@ package castlewar.scene;
 import castlewar.CastleWar;
 import castlewar.network.PacketCreator;
 import castlewar.network.PacketReader;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -79,7 +80,12 @@ public class MenuScene extends CastleWarScene {
         switch (packetId) {
             case 0: {
                 byte position = reader.readByte();
-                castleWar.changeScene(1);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        castleWar.changeScene(1);
+                    }
+                });
             }
             break;
         }
