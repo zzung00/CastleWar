@@ -8,33 +8,61 @@ import java.util.ArrayList;
 
 public class Player {
     private Image image;
-    private int type;
-    private double x, y;
+    private int id;
+    private long x, y;
     private boolean horizontally;
     private boolean up;
     private boolean down;
     private boolean left;
     private boolean right;
     private boolean shooting;
-    private double speed = 1.5;
+    private double speed = 2;
 
     private ArrayList<PlayerAttack> playerAttacks = new ArrayList<>();
     private PlayerAttack playerAttack;
 
-    public Player(int type) {
-        this.type = type;
+    public Player(int id) {
+        this.id = id;
 
-        if (type == 0) {
+        if (id == 0) {
             image = new Image(new File("img/player1.png").toURI().toString());
             x = 20;
             y = 500;
             horizontally = false;
-        } else if (type == 1) {
+        } else if (id == 1) {
             image = new Image(new File("img/player2.png").toURI().toString());
             x = 680;
             y = 500;
             horizontally = true;
         }
+    }
+
+    public boolean isHorizontally() {
+        return horizontally;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setX(long x) {
+        this.x = x;
+    }
+
+    public long getX() {
+        return x;
+    }
+
+    public long getY() {
+        return y;
+    }
+
+    public void setY(long y) {
+        this.y = y;
     }
 
     public void setUp(boolean up) {
@@ -74,6 +102,10 @@ public class Player {
         if (right) {
             x += speed;
         }
+    }
+
+    public boolean isMove() {
+        return up || down || left || right;
     }
 
     public void render(GraphicsContext graphic) {

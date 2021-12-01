@@ -38,7 +38,7 @@ public class PacketWriter {
         writeByte((byte) (i & 0xFF));
     }
 
-    public void writeLong(int i) {
+    public void writeLong(long i) {
         writeByte((byte) ((i >>> 56) & 0xFF));
         writeByte((byte) ((i >>> 48) & 0xFF));
         writeByte((byte) ((i >>> 40) & 0xFF));

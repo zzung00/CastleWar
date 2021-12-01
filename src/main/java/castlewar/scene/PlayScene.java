@@ -3,7 +3,9 @@ package castlewar.scene;
 import castlewar.Castle;
 import castlewar.CastleWar;
 import castlewar.Player;
+import castlewar.network.PacketCreator;
 import castlewar.network.PacketReader;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -80,6 +82,9 @@ public class PlayScene extends CastleWarScene{
     @Override
     public void update(double delta) {
         players.get(id).update(delta);
+        if (players.get(id).isMove()) {
+            castleWar.sendPacket(PacketCreator.movePlayer(players.get(id)));
+        }
     }
 
     @Override
@@ -105,6 +110,23 @@ public class PlayScene extends CastleWarScene{
 
     @Override
     public void receive(PacketReader reader) {
+        short packetId = reader.readShort();
 
+        switch (packetId) {
+            case 1: {
+                int oid = reader.readInt();
+                byte horizon = reader.readByte();
+                int x = reader.readInt();
+                int y = reader.readInt();
+                if (horizon == 0) {
+                    players.get(oid).setHorizontally(false);
+                }else {
+                    players.get(oid).setHorizontally(true);
+                }
+                players.get(oid).setX(x);
+                players.get(oid).setY(y);
+            }
+            break;
+        }
     }
 }
