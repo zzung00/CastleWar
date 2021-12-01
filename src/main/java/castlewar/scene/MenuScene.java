@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -17,7 +18,7 @@ public class MenuScene extends CastleWarScene {
     private Button btnExit;
     private ImageView background;
     private ImageView logo;
-
+    private Label waitingLabel;
 
     public MenuScene(CastleWar castleWar, int width, int height) {
         super(castleWar, width, height);
@@ -43,6 +44,11 @@ public class MenuScene extends CastleWarScene {
         btnPlay.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                waitingLabel = new Label("Waiting for game...");
+                waitingLabel.setLayoutX(500);
+                waitingLabel.setLayoutY(10);
+                waitingLabel.setPrefSize(100, 100);
+                root.getChildren().add(waitingLabel);
                 castleWar.sendPacket(PacketCreator.startGame());
             }
         });
@@ -63,6 +69,16 @@ public class MenuScene extends CastleWarScene {
     }
 
     @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
     public void update(double delta) {
 
     }
@@ -79,13 +95,15 @@ public class MenuScene extends CastleWarScene {
 
         switch (packetId) {
             case 0: {
-                byte position = reader.readByte();
+                int id = reader.readInt();
+                castleWar.setId(id);
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
                         castleWar.changeScene(1);
                     }
                 });
+
             }
             break;
         }

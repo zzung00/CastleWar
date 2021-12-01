@@ -3,12 +3,12 @@ package castlewar;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
 public class Player {
     private Image image;
+    private int type;
     private double x, y;
     private boolean horizontally;
     private boolean up;
@@ -21,11 +21,20 @@ public class Player {
     private ArrayList<PlayerAttack> playerAttacks = new ArrayList<>();
     private PlayerAttack playerAttack;
 
-    public Player(double x, double y, boolean horizontally) {
-        this.x = x;
-        this.y = y;
-        this.horizontally = horizontally;
-        image = new Image(new File("img/player1.png").toURI().toString());
+    public Player(int type) {
+        this.type = type;
+
+        if (type == 0) {
+            image = new Image(new File("img/player1.png").toURI().toString());
+            x = 20;
+            y = 500;
+            horizontally = false;
+        } else if (type == 1) {
+            image = new Image(new File("img/player2.png").toURI().toString());
+            x = 680;
+            y = 500;
+            horizontally = true;
+        }
     }
 
     public void setUp(boolean up) {

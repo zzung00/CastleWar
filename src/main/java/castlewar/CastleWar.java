@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public class CastleWar extends Application {
+    private int id;
     private Stage stage;
     private ArrayList<CastleWarScene> scenes = new ArrayList<>();
     private int currentScene = 0;
@@ -87,10 +88,19 @@ public class CastleWar extends Application {
         return stage;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     public void changeScene(int sceneNum) {
         currentScene = sceneNum;
-        scenes.get(currentScene);
+        scenes.get(currentScene).pause();
         stage.setScene(scenes.get(currentScene));
+        scenes.get(currentScene).resume();
     }
 
     public static void main(String[] args) {
@@ -130,7 +140,6 @@ public class CastleWar extends Application {
                         break;
                     }
                     System.out.println(Arrays.toString(data));
-
                     PacketReader reader = new PacketReader(data);
                     System.out.println(Arrays.toString(data));
                     scenes.get(currentScene).receive(reader);

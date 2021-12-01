@@ -16,6 +16,10 @@ public abstract class CastleWarScene extends Scene {
         root.setPrefSize(width, height);
     }
 
+    public abstract void resume();
+
+    public abstract void pause();
+
     public abstract void update(double delta);
 
     public abstract void render();
