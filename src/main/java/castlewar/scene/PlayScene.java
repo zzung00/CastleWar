@@ -2,9 +2,11 @@ package castlewar.scene;
 
 import castlewar.Castle;
 import castlewar.CastleWar;
+import castlewar.FireEffect;
 import castlewar.Player;
 import castlewar.network.PacketCreator;
 import castlewar.network.PacketReader;
+import castlewar.network.PacketWriter;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
@@ -74,14 +76,22 @@ public class PlayScene extends CastleWarScene{
                     players.get(id).setUp(true);
                 }else if (event.getCode() == KeyCode.ESCAPE) {
                     System.exit(0);
+                }else if (event.getCode() == KeyCode.SPACE) {
+                    attack();
                 }
             }
         });
     }
 
+    public void attack() {
+        players.get(id).attack();
+        castleWar.sendPacket(PacketCreator.attack(players.get(id)));
+    }
+
     @Override
     public void update(double delta) {
-        players.get(id).update(delta);
+        players.get(0).update(delta);
+        players.get(1).update(delta);
         if (players.get(id).isMove()) {
             castleWar.sendPacket(PacketCreator.movePlayer(players.get(id)));
         }
@@ -125,8 +135,12 @@ public class PlayScene extends CastleWarScene{
                 }
                 players.get(oid).setX(x);
                 players.get(oid).setY(y);
+            }break;
+
+            case 2 : {
+                int oid = reader.readInt();
+                players.get(oid).attack();
             }
-            break;
         }
     }
 }

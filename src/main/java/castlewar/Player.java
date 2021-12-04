@@ -15,11 +15,9 @@ public class Player {
     private boolean down;
     private boolean left;
     private boolean right;
-    private boolean shooting;
     private double speed = 2;
 
-    private ArrayList<PlayerAttack> playerAttacks = new ArrayList<>();
-    private PlayerAttack playerAttack;
+    private FireEffect effect;
 
     public Player(int id) {
         this.id = id;
@@ -35,6 +33,8 @@ public class Player {
             y = 500;
             horizontally = true;
         }
+
+        effect = new FireEffect();
     }
 
     public boolean isHorizontally() {
@@ -81,10 +81,6 @@ public class Player {
         this.right = right;
     }
 
-    public void setShooting(boolean shooting) {
-        this.shooting = shooting;
-    }
-
     public void setHorizontally(boolean horizontally) {
         this.horizontally = horizontally;
     }
@@ -102,6 +98,11 @@ public class Player {
         if (right) {
             x += speed;
         }
+        effect.update(delta, this);
+    }
+
+    public void attack() {
+        effect.show();
     }
 
     public boolean isMove() {
@@ -114,13 +115,7 @@ public class Player {
         } else {
             graphic.drawImage(image, x, y);
         }
-    }
-
-    private void playerAttackProcess() {
-        for (int i = 0; i < playerAttacks.size(); i++) {
-            playerAttack = playerAttacks.get(i);
-            playerAttack.fire();
-        }
+        effect.render(graphic);
     }
 
 }
