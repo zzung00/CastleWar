@@ -8,6 +8,8 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,6 +19,7 @@ import javafx.scene.input.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class PlayScene extends CastleWarScene{
     private int id;
@@ -83,7 +86,7 @@ public class PlayScene extends CastleWarScene{
 
     public void attack() {
         players.get(id).attack();
-        castleWar.sendPacket(PacketCreator.attack(players.get(id)));
+        castleWar.sendPacket(PacketCreator.attack());
         balls.add(new FireBall(players.get(id).getX(), players.get(id).getY(), players.get(id).isHorizontally()));
     }
 
@@ -99,9 +102,11 @@ public class PlayScene extends CastleWarScene{
             b.update(delta);
 
             if (leftCastle.intersect(b.getRect())) {
+                leftCastle.hit();
                 balls.remove(b);
             }
             if (rightCastle.intersect(b.getRect())) {
+                rightCastle.hit();
                 balls.remove(b);
             }
             if (b.getX() <= 0 || b.getX() >= 800) {

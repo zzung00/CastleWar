@@ -19,7 +19,7 @@ public class PacketCreator {
         return writer.getPacket();
     }
 
-    public static byte[] attack(Player player) {
+    public static byte[] attack() {
         PacketWriter writer = new PacketWriter();
         writer.writeShort(2);
         return writer.getPacket();
