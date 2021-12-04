@@ -1,9 +1,6 @@
 package castlewar.scene;
 
-import castlewar.Castle;
-import castlewar.CastleWar;
-import castlewar.FireEffect;
-import castlewar.Player;
+import castlewar.*;
 import castlewar.network.PacketCreator;
 import castlewar.network.PacketReader;
 import castlewar.network.PacketWriter;
@@ -28,6 +25,7 @@ public class PlayScene extends CastleWarScene{
     private Castle leftCastle;
     private Castle rightCastle;
     private HashMap<Integer, Player> players = new HashMap<>();
+    private ArrayList<FireBall> balls = new ArrayList<>();
 
     public PlayScene(CastleWar castleWar, int width, int height) {
         super(castleWar, width, height);
@@ -41,8 +39,8 @@ public class PlayScene extends CastleWarScene{
         canvas.setWidth(800);
         canvas.setHeight(600);
         root.getChildren().add(canvas);
-        leftCastle = new Castle(-15, 50, false);
-        rightCastle = new Castle(815, 50, true);
+        leftCastle = new Castle(-5, 50, false);
+        rightCastle = new Castle(605, 50, true);
         players.put(0, new Player(0));
         players.put(1, new Player(1));
 
@@ -86,6 +84,7 @@ public class PlayScene extends CastleWarScene{
     public void attack() {
         players.get(id).attack();
         castleWar.sendPacket(PacketCreator.attack(players.get(id)));
+        balls.add(new FireBall(players.get(id).getX(), players.get(id).getY(), players.get(id).isHorizontally()));
     }
 
     @Override
@@ -94,6 +93,20 @@ public class PlayScene extends CastleWarScene{
         players.get(1).update(delta);
         if (players.get(id).isMove()) {
             castleWar.sendPacket(PacketCreator.movePlayer(players.get(id)));
+        }
+
+        for (FireBall b : balls) {
+            b.update(delta);
+
+            if (leftCastle.intersect(b.getRect())) {
+                balls.remove(b);
+            }
+            if (rightCastle.intersect(b.getRect())) {
+                balls.remove(b);
+            }
+            if (b.getX() <= 0 || b.getX() >= 800) {
+                balls.remove(b);
+            }
         }
     }
 
@@ -104,6 +117,9 @@ public class PlayScene extends CastleWarScene{
         graphic.strokeRect(0, 0, 800, 600);
         leftCastle.render(graphic);
         rightCastle.render(graphic);
+        for (FireBall b : balls) {
+            b.render(graphic);
+        }
         players.get(0).render(graphic);
         players.get(1).render(graphic);
     }
@@ -140,6 +156,7 @@ public class PlayScene extends CastleWarScene{
             case 2 : {
                 int oid = reader.readInt();
                 players.get(oid).attack();
+                balls.add(new FireBall(players.get(oid).getX(), players.get(oid).getY(), players.get(oid).isHorizontally()));
             }
         }
     }
